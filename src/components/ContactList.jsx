@@ -29,17 +29,25 @@ const ContactList = () => {
   }, []);
 
   if (loading) {
-    return <Spinner animation="border" />;
+    return (
+      <Container className="text-center">
+        <Spinner animation="border" />
+      </Container>
+    );
   }
 
   if (error) {
-    return <Alert variant="danger">{error}</Alert>;
+    return (
+      <Container className="text-center">
+        <Alert variant="danger">{error}</Alert>
+      </Container>
+    );
   }
 
   return (
-    <Container>
-      <h3>Contact Details</h3>
-      <Table striped bordered hover>
+    <Container fluid className="px-4">
+      <h3 className="my-4">Contact Details</h3>
+      <Table responsive striped bordered hover>
         <thead>
           <tr>
             <th>Name</th>

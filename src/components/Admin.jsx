@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Form, Button, Alert, Spinner } from 'react-bootstrap';
+import { Container, Form, Button, Alert, Spinner, Row, Col } from 'react-bootstrap';
 import { db, storage, auth } from '../firebase'; // Import Firestore, Storage, and Auth from Firebase
 import { collection, addDoc, getDocs } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import ContactList from './ContactList';
+import ServiceList from './ServiceList'; // Import ServiceList component
+import ProductList from './ProductList';
 
 const Admin = () => {
     const [title, setTitle] = useState('');
@@ -17,6 +19,8 @@ const Admin = () => {
     const [authenticated, setAuthenticated] = useState(true);
     const [uploading, setUploading] = useState(false);
     const [viewApplications, setViewApplications] = useState(false);
+    const [showServices, setShowServices] = useState(false);
+    const [showProducts, setShowProducts] = useState(false);
     const [applications, setApplications] = useState([]);
     const navigate = useNavigate();
 
@@ -108,6 +112,13 @@ const Admin = () => {
         setShowContacts(!showContacts);
     };
 
+    const handleToggleServices = () => {
+        setShowServices(!showServices);
+    };
+    const toggleProducts = () => {
+        setShowProducts(!showProducts)
+    };
+
     if (!authenticated) {
         return null;
     }
@@ -146,6 +157,18 @@ const Admin = () => {
                 </Button>
             </div>
             {showContacts && <ContactList />}
+            <div style={{ width: '100%', textAlign: 'end' }}>
+                <Button variant="primary" onClick={handleToggleServices} className="mb-3">
+                    {showServices ? 'Hide Services' : 'View Services'}
+                </Button>
+            </div>
+            {showServices && <ServiceList />}
+            <div style={{ width: '100%', textAlign: 'end' }}>
+                <Button variant='dark' onClick={toggleProducts} className="mb-3">
+                    {showProducts ? 'Hide Products' : 'Show Products'}
+                </Button>
+            </div>
+            {showProducts && <ProductList />}
             <div style={{ width: '100%', textAlign: 'end' }}>
                 <Button
                     variant="success"
@@ -215,27 +238,53 @@ const Admin = () => {
 };
 
 const ApplicationList = ({ applications }) => (
-    <div className="mt-4 mb-2">
+    <Container className="mt-4 mb-2">
         <h3>Job Applications</h3>
         {applications.length === 0 ? (
             <p>No applications found.</p>
         ) : (
-            <ul>
+            <ul className="list-unstyled">
                 {applications.map(app => (
-                    <li key={app.id} type='1'>
-                        <h5 className='text-success'>Job Title: {app.jobTitle}</h5><br />
-                        <strong className='text-danger'>Applicant Name: {app.firstName} {app.lastName}</strong><br />
-                        <strong>Email: {app.email}</strong><br />
-                        <strong>Phone: {app.phone}</strong><br />
-                        <strong>Address: {app.address}</strong><br />
-                        <strong>Resume URL: <a href={app.resumeUrl} target="_blank" rel="noopener noreferrer">{app.resumeUrl}</a></strong><br />
+                    <li key={app.id} className="mb-3">
+                        <Container fluid>
+                            <Row className="border p-3 rounded">
+                                <Col xs={12} md={6} lg={4}>
+                                    <h5 className='text-success'>Job Title: {app.jobTitle}</h5>
+                                </Col>
+                                <Col xs={12} md={6} lg={4}>
+                                    <strong className='text-danger'>Applicant Name: {app.firstName} {app.lastName}</strong>
+                                </Col>
+                                <Col xs={12} md={6} lg={4}>
+                                    <strong>Email: {app.email}</strong>
+                                </Col>
+                                <Col xs={12} md={6} lg={4}>
+                                    <strong>Phone: {app.phone}</strong>
+                                </Col>
+                                <Col xs={12} md={6} lg={4}>
+                                    <strong>Address: {app.address}</strong>
+                                </Col>
+                                <Col xs={12} md={6} lg={4}>
+                                    <strong>
+                                        Resume:
+                                        <Button
+                                            className='ml-1'
+                                            variant="primary"
+                                            href={app.resumeUrl}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                        >
+                                            View Resume
+                                        </Button>
+                                    </strong>
+                                </Col>
+                            </Row>
+                        </Container>
                     </li>
                 ))}
             </ul>
         )}
-    </div>
+    </Container>
 );
-
 export default Admin;
 
 // import React, { useState, useEffect } from 'react';
