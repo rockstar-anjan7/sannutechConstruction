@@ -15,6 +15,8 @@ import { auth } from './firebase'; // Import auth from your Firebase configurati
 import UploadJob from './components/UploadJob';
 import UploadService from './components/UploadService';
 import UploadProduct from './components/UploadProduct';
+import UploadGallery from './components/UploadGallery';
+import DetailPage from './components/DetailPage';
 
 
 function App() {
@@ -28,6 +30,7 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/services" element={<Services />} />
           <Route path="/products" element={<Products />} /> 
+          <Route path="/product/:id" component={DetailPage} />
           <Route path="/research-development" element={<ResearchDevelopment/>} />
           <Route path="/carrerPage" element={<CareerPage/>}/>
           <Route path="/contact" element={<Contact />} />
@@ -35,6 +38,7 @@ function App() {
           <Route path="/upload-job" element={<UploadJob />} />
           <Route path="/upload-service" element={<UploadService />} />
           <Route path="/upload-product" element={<UploadProduct />} />
+          <Route path="/upload-gallery" element={<UploadGallery />} />
         </Routes>
         <Footer auth={auth} />
       </div>

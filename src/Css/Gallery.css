@@ -1,0 +1,18 @@
+.media-item {
+    height: 250px; /* Fixed height for all media items */
+    object-fit: cover; /* Ensures the content covers the entire area */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.media-item video {
+    height: 100%; /* Ensures the video takes the full height */
+    width: 100%; /* Ensures the video takes the full width */
+    object-fit: cover; /* Ensures the video content covers the entire area */
+}
+
+.card-img-top {
+    height: 100%; /* Ensures the image takes the full height */
+    object-fit: cover; /* Ensures the image content covers the entire area */
+}
