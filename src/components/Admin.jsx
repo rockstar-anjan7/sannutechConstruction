@@ -121,6 +121,22 @@ const Admin = () => {
                         </Card.Body>
                     </Card>
                 </Col>
+                <Col xs={12} md={6} lg={4}>
+                    <Card className="text-center">
+                        <Card.Body>
+                            <Card.Title>Upload ResearchDevelopment</Card.Title>
+                            <Button variant="primary" onClick={() => navigate('/upload-research-development')}>Upload ResearchDevelopment</Button>
+                        </Card.Body>
+                    </Card>
+                </Col>
+                <Col xs={12} md={6} lg={4}>
+                    <Card className="text-center">
+                        <Card.Body>
+                            <Card.Title>Upload AboutImage</Card.Title>
+                            <Button variant="dark" onClick={() => navigate('/upload-aboutImage')}>Upload AboutImage</Button>
+                        </Card.Body>
+                    </Card>
+                </Col>
             </Row>
 
             {viewApplications && <ApplicationList applications={applications} />}

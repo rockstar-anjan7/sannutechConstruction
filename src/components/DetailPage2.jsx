@@ -5,32 +5,32 @@ import { db } from '../firebase'; // Import Firestore instance from Firebase
 import { doc, getDoc } from 'firebase/firestore';
 import '../Css/DetailPage.css'; // Import your custom CSS for DetailPage styling
 
-const DetailPage = () => {
+const DetailPage2 = () => {
   const { id } = useParams();
-  const [product, setProduct] = useState(null);
+  const [service, setService] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchProduct = async () => {
+    const fetchService = async () => {
       try {
-        const docRef = doc(db, 'product', id);
+        const docRef = doc(db, 'service', id); // Adjust 'service' to your Firestore collection name for services
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
-          setProduct(docSnap.data());
+          setService(docSnap.data());
         } else {
           console.log('No such document!');
-          setError('Product not found');
+          setError('Service not found');
         }
       } catch (error) {
-        console.error('Error fetching product:', error);
-        setError('Error fetching product');
+        console.error('Error fetching service:', error);
+        setError('Error fetching service');
       } finally {
         setLoading(false);
       }
     };
 
-    fetchProduct();
+    fetchService();
   }, [id]);
 
   if (loading) {
@@ -43,15 +43,14 @@ const DetailPage = () => {
 
   return (
     <Container className="my-5">
-      {product && (
-        <Card className="product-detail-card">
-          <Card.Img variant="top" src={product.imageUrl} alt={product.title} className="product-image" />
+      {service && (
+        <Card className="service-detail-card">
+          <Card.Img variant="top" src={service.imageUrl} alt={service.title} className="service-image" />
           <Card.Body>
-            <Card.Title className="text-center blog-title">{product.title}</Card.Title>
+            <Card.Title className="text-center service-title">{service.title}</Card.Title>
             <Row>
               <Col>
-                
-                <p className="blog-content">{product.description}</p>
+                <p className="blog-content">{service.description}</p>
               </Col>
             </Row>
           </Card.Body>
@@ -61,4 +60,4 @@ const DetailPage = () => {
   );
 };
 
-export default DetailPage;
+export default DetailPage2;
