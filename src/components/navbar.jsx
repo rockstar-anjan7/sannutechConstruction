@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Navbar, Nav, Offcanvas } from 'react-bootstrap';
 import '../Css/Navbar.css'; // Import your custom CSS for Navbar styling
-
 const CustomNavbar = () => {
   const [show, setShow] = useState(false);
 
@@ -12,20 +11,29 @@ const CustomNavbar = () => {
   return (
     <>
       <Navbar bg="dark" variant="dark" expand="lg" fixed="top">
-        <Navbar.Brand as={Link} to="/" className='ml-2'>SannuTech Construction</Navbar.Brand>
-        <Navbar.Toggle aria-controls="offcanvas-navbar" onClick={handleShow} />
-        <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end d-none d-lg-flex mr-2">
-          <Nav>
-            <Nav.Link as={Link} to="/">Home</Nav.Link>
-            <Nav.Link as={Link} to="/about">About</Nav.Link>
-            <Nav.Link as={Link} to="/services">Services</Nav.Link>
-            <Nav.Link as={Link} to="/products">Products</Nav.Link>
-            <Nav.Link as={Link} to="/research-development">Research</Nav.Link>
-            <Nav.Link as={Link} to="/carrerPage">Career</Nav.Link>
-            <Nav.Link as={Link} to="/contact">Contact</Nav.Link>
-          </Nav>
-        </Navbar.Collapse>
-      </Navbar>
+      <Navbar.Brand as={Link} to="/" className='ml-2'>
+        <img
+          src="favicon.ico"
+          width="40"
+          height="40"
+          className="d-inline-block align-top ml-2"
+          alt="SannuTech Construction logo"
+        />{' '}
+        Sannutech Construction
+      </Navbar.Brand>
+      <Navbar.Toggle aria-controls="offcanvas-navbar" onClick={handleShow} />
+      <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end d-none d-lg-flex mr-4">
+        <Nav>
+          <Nav.Link as={Link} to="/">Home</Nav.Link>
+          <Nav.Link as={Link} to="/about">About</Nav.Link>
+          <Nav.Link as={Link} to="/services">Services</Nav.Link>
+          <Nav.Link as={Link} to="/products">Products</Nav.Link>
+          <Nav.Link as={Link} to="/research-development">Research</Nav.Link>
+          <Nav.Link as={Link} to="/carrerPage">Career</Nav.Link>
+          <Nav.Link as={Link} to="/contact">Contact</Nav.Link>
+        </Nav>
+      </Navbar.Collapse>
+    </Navbar>
 
       <Offcanvas show={show} onHide={handleClose}>
         <Offcanvas.Header closeButton>

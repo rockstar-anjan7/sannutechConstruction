@@ -27,7 +27,7 @@ const Home = () => {
                 }}
               >
                 <div className="carousel-caption">
-                  <h1>Welcome to Sannutech Interior-Art & Infra-Buildcon Pvt.Ltd</h1>
+                  <h1>Welcome to Sannutech Interio-Art & Infra-Buildcon Pvt.Ltd</h1>
                   <p>Your trusted partner in building your dreams.</p>
                   <Link to="/contact" className="btn btn-primary">Get in Touch</Link>
                 </div>

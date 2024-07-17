@@ -4,14 +4,14 @@ import { getStorage } from 'firebase/storage';
 import { getAuth } from 'firebase/auth';
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCMqR8rB5KlKmqCQND4zoIfJRSwqgHt94E",
-    authDomain: "sannutech-construction.firebaseapp.com",
-    projectId: "sannutech-construction",
-    storageBucket: "sannutech-construction.appspot.com",
-    messagingSenderId: "276097035919",
-    appId: "1:276097035919:web:0c19fd11c7e6a0f3a04afa",
-    measurementId: "G-11QMYQRE72"
-  };
+  apiKey: "AIzaSyCE_7LVQ8zxmHUTLtzBCnYj2t67LsDyXnI",
+  authDomain: "sannutech-construction-2d156.firebaseapp.com",
+  projectId: "sannutech-construction-2d156",
+  storageBucket: "sannutech-construction-2d156.appspot.com",
+  messagingSenderId: "1014504309635",
+  appId: "1:1014504309635:web:68f359a14e5bff4151ecb6",
+  measurementId: "G-BWDZE4VBVQ"
+};
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Table, Button, Spinner, Alert, Modal, Form } from 'react-bootstrap';
-import { db } from '../firebase';
+import { db, storage } from '../firebase';
 import { collection, getDocs, doc, updateDoc, deleteDoc } from 'firebase/firestore';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 const JobList = ({ jobListUpdated, setJobListUpdated }) => {
   const [jobs, setJobs] = useState([]);
@@ -10,6 +11,7 @@ const JobList = ({ jobListUpdated, setJobListUpdated }) => {
   const [editJob, setEditJob] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [alert, setAlert] = useState({ show: false, message: '', variant: '' });
+  const [jobImage, setJobImage] = useState(null);
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -39,15 +41,24 @@ const JobList = ({ jobListUpdated, setJobListUpdated }) => {
   const handleSave = async () => {
     try {
       const jobDoc = doc(db, 'jobOpenings', editJob.id);
+
+      let imageUrl = editJob.imageUrl;
+      if (jobImage) {
+        const imageRef = ref(storage, `jobImages/${jobImage.name}`);
+        await uploadBytes(imageRef, jobImage);
+        imageUrl = await getDownloadURL(imageRef);
+      }
+
       await updateDoc(jobDoc, {
         title: editJob.title,
         location: editJob.location,
         experience: editJob.experience,
         salary: editJob.salary,
-        skillLevel: editJob.skillLevel
+        skillLevel: editJob.skillLevel,
+        imageUrl
       });
 
-      setJobs(jobs.map(job => job.id === editJob.id ? editJob : job));
+      setJobs(jobs.map(job => job.id === editJob.id ? { ...editJob, imageUrl } : job));
       setShowModal(false);
       setAlert({ show: true, message: 'Job updated successfully!', variant: 'success' });
     } catch (error) {
@@ -94,6 +105,7 @@ const JobList = ({ jobListUpdated, setJobListUpdated }) => {
               <th>Experience</th>
               <th>Salary</th>
               <th>Skill Level</th>
+              <th>Image</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -105,6 +117,9 @@ const JobList = ({ jobListUpdated, setJobListUpdated }) => {
                 <td>{job.experience}</td>
                 <td>{job.salary}</td>
                 <td>{job.skillLevel}</td>
+                <td>
+                  {job.imageUrl && <img src={job.imageUrl} alt={job.title} style={{ width: '50px', height: '50px' }} />}
+                </td>
                 <td>
                   <Button variant="primary" onClick={() => handleEdit(job)} className="mb-2 mr-2">Edit</Button>
                   <Button variant="danger" onClick={() => handleDelete(job.id)} className="mb-2">Delete</Button>
@@ -157,13 +172,21 @@ const JobList = ({ jobListUpdated, setJobListUpdated }) => {
               <Form.Label>Skill Level</Form.Label>
               <Form.Control
                 as="select"
-                value={editJob?.skillLevel || 'skilled'}
+                value={editJob?.skillLevel || 'professional'}
                 onChange={(e) => setEditJob({ ...editJob, skillLevel: e.target.value })}
               >
-                <option value="skilled">Skilled</option>
-                <option value="non-skilled">Non-skilled</option>
+                <option value="professional">Professional</option>
+                <option value="skilled / non-skilled">Skilled / Non-skilled</option>
               </Form.Control>
             </Form.Group>
+            <Form.Group>
+              <Form.Label>Job Image</Form.Label>
+              <Form.Control
+                type="file"
+                onChange={(e) => setJobImage(e.target.files[0])}
+              />
+            </Form.Group>
+            {editJob?.imageUrl && <img src={editJob.imageUrl} alt={editJob.title} style={{ width: '100px', height: '100px' }} />}
           </Form>
         </Modal.Body>
         <Modal.Footer>
@@ -223,7 +246,8 @@ export default JobList;
 //         title: editJob.title,
 //         location: editJob.location,
 //         experience: editJob.experience,
-//         salary: editJob.salary
+//         salary: editJob.salary,
+//         skillLevel: editJob.skillLevel
 //       });
 
 //       setJobs(jobs.map(job => job.id === editJob.id ? editJob : job));
@@ -272,6 +296,7 @@ export default JobList;
 //               <th>Location</th>
 //               <th>Experience</th>
 //               <th>Salary</th>
+//               <th>Skill Level</th>
 //               <th>Actions</th>
 //             </tr>
 //           </thead>
@@ -282,6 +307,7 @@ export default JobList;
 //                 <td>{job.location}</td>
 //                 <td>{job.experience}</td>
 //                 <td>{job.salary}</td>
+//                 <td>{job.skillLevel}</td>
 //                 <td>
 //                   <Button variant="primary" onClick={() => handleEdit(job)} className="mb-2 mr-2">Edit</Button>
 //                   <Button variant="danger" onClick={() => handleDelete(job.id)} className="mb-2">Delete</Button>
@@ -329,6 +355,17 @@ export default JobList;
 //                 value={editJob?.salary || ''}
 //                 onChange={(e) => setEditJob({ ...editJob, salary: e.target.value })}
 //               />
+//             </Form.Group>
+//             <Form.Group>
+//               <Form.Label>Skill Level</Form.Label>
+//               <Form.Control
+//                 as="select"
+//                 value={editJob?.skillLevel || 'professional'}
+//                 onChange={(e) => setEditJob({ ...editJob, skillLevel: e.target.value })}
+//               >
+//                 <option value="professional">Professional</option>
+//                 <option value="skilled / non-skilled">Skilled / Non-skilled</option>
+//               </Form.Control>
 //             </Form.Group>
 //           </Form>
 //         </Modal.Body>

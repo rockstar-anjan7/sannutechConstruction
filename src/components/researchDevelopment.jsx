@@ -33,8 +33,8 @@ const ResearchDevelopment = () => {
 
   return (
     <div className="research-development-container">
-      <Container maxWidth="lg" className="my-5">
-        <Typography variant="h2" className="text-center mb-4">Research and Development</Typography>
+      <Container  className="my-5">
+        <h2 className="text-center mb-4">Research and Development</h2>
         <Grid container spacing={3}>
           {topics.map(topic => (
             <Grid item xs={12} sm={6} md={4} key={topic.id}>

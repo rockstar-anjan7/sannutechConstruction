@@ -63,7 +63,7 @@ const Footer = ({ auth }) => {
                 <i className="fas fa-map-marker-alt me-2"></i>Address:  at +post-parsouni ,itkhori ,chatra,Jharkhand-825408,INDIA
               </li>
               <li>
-                <i className="fas fa-envelope me-2"></i>Email: Sannutechinterio24infra@gmail.com
+                <i className="fas fa-envelope me-2"></i>Email: sannutechinterio24infra@gmail.com
               </li>
               <li>
                 <i className="fas fa-phone me-2"></i>Phone: 8252200480

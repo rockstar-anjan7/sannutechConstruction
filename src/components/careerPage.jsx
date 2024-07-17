@@ -20,8 +20,8 @@ const CareerPage = () => {
       setJobOpenings(jobOpeningsList);
 
       // Filter jobs into skilled and non-skilled categories
-      const skilledJobsList = jobOpeningsList.filter(job => job.skillLevel === 'skilled');
-      const nonSkilledJobsList = jobOpeningsList.filter(job => job.skillLevel === 'non-skilled');
+      const skilledJobsList = jobOpeningsList.filter(job => job.skillLevel === 'professional');
+      const nonSkilledJobsList = jobOpeningsList.filter(job => job.skillLevel === 'skilled / non-skilled');
       setSkilledJobs(skilledJobsList);
       setNonSkilledJobs(nonSkilledJobsList);
     };
@@ -31,7 +31,7 @@ const CareerPage = () => {
 
   return (
     <Container className="my-5">
-      <h1 className="text-center mb-4">We are Hiring !</h1>
+      <h2 className="text-center mb-4" style={{ fontFamily: "'Roboto', sans-serif", color: "#333" }}>We are Hiring !</h2>
 
       <Tabs defaultActiveKey="all" id="jobs-tabs" className="mb-4">
         <Tab eventKey="all" title={<span style={{ color: 'blue' }}>All Jobs</span>}>
